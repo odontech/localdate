@@ -3,7 +3,7 @@ var assert    = require('assert');
 
 describe('Valid', function () {
 
-  it('valid', function () {
+  it('new', function () {
     var l = new LocalDate(983, 12, 31);
 
     assert.equal(l.getYear(), 983);
@@ -13,7 +13,7 @@ describe('Valid', function () {
     assert.ok(l.isValid());
   });
 
-  it('valid leap day', function () {
+  it('leap day', function () {
     var l = new LocalDate(2004, 2, 29);
 
     assert.equal(l.getYear(), 2004);
@@ -23,7 +23,7 @@ describe('Valid', function () {
     assert.ok(l.isValid());
   });
 
-  it('valid centenary leap day', function () {
+  it('centenary leap day', function () {
     var l = new LocalDate(2000, 2, 29);
 
     assert.equal(l.getYear(), 2000);
@@ -33,13 +33,33 @@ describe('Valid', function () {
     assert.ok(l.isValid());
   });
 
-  it('valid today', function () {
+  it('today', function () {
     var l = LocalDate.today();
     var d = new Date;
 
     assert.equal(l.getYear(), d.getFullYear());
     assert.equal(l.getMonth(), d.getMonth()+1);
     assert.equal(l.getDay(), d.getDate());
+
+    assert.ok(l.isValid());
+  });
+
+  it('fromString', function () {
+    var l = LocalDate.fromString('2014-01-11');
+
+    assert.equal(l.getYear(), 2014);
+    assert.equal(l.getMonth(), 1);
+    assert.equal(l.getDay(), 11);
+
+    assert.ok(l.isValid());
+  });
+
+  it('fromDate', function () {
+    var l = LocalDate.fromDate(new Date(2014, 0, 11));
+
+    assert.equal(l.getYear(), 2014);
+    assert.equal(l.getMonth(), 1);
+    assert.equal(l.getDay(), 11);
 
     assert.ok(l.isValid());
   });
@@ -235,6 +255,12 @@ describe('Compare', function () {
     assert.ok(l.isBefore(c));
   });
 
+  it('compare with string', function () {
+    var l = new LocalDate(2007, 1, 27);
+
+    assert.equal(l.compareTo('2007-11-01'), -1);
+  });
+
 });
 
 
@@ -253,6 +279,16 @@ describe('Convert', function () {
     assert.equal(c.getFullYear(), 2005);
     assert.equal(c.getMonth(), 3);
     assert.equal(c.getDate(), 10);
+  });
+
+});
+
+describe('Utility', function () {
+
+  it('day in year', function () {
+    assert.equal(new LocalDate(2005, 4, 10).getDayOfYear(), 100);
+    assert.equal(new LocalDate(2000, 11, 30).getDayOfYear(), 335);
+    assert.equal(new LocalDate(2000, 1, 20).getDayOfYear(), 20);
   });
 
 });

@@ -1,12 +1,12 @@
-function LocalDate (a1, a2, a3) {
-  var args = arguments.length === 1 ? arguments[0].split('-') : Array.prototype.slice.apply(arguments);
-
-  this.year  = parseInt(args[0]);
-  this.month = parseInt(args[1]);
-  this.day   = parseInt(args[2]);
+function LocalDate (year, month, day) {
+  this.year  = parseInt(year);
+  this.month = parseInt(month);
+  this.day   = parseInt(day);
 
   return this;
 }
+
+LocalDate._days = [0,31,28,31,30,31,30,31,31,30,31,30,31];
 
 LocalDate.comparator = function (l1, l2) {
   var result = 0;
@@ -27,8 +27,15 @@ LocalDate.comparator = function (l1, l2) {
 }
 
 LocalDate.today = function () {
-  var date = new Date;
-  return new LocalDate(date.getFullYear(), date.getMonth()+1, date.getDate());
+  return LocalDate.fromDate(new Date);
+}
+
+LocalDate.fromString = function (date) {
+  return new (LocalDate.bind.apply(LocalDate, [undefined].concat(date.split('-'))));
+}
+
+LocalDate.fromDate = function (date) {
+  return new LocalDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
 }
 
 LocalDate.prototype.clone = function () {
@@ -48,10 +55,7 @@ LocalDate.prototype.isAfter = function (date) {
 }
 
 LocalDate.prototype.compareTo = function (date) {
-  if (typeof date === 'string')
-    date = new LocalDate(date);
-
-  return LocalDate.comparator(this, date);
+  return LocalDate.comparator(this, typeof date === 'string' ? LocalDate.fromString(date) : date);
 }
 
 LocalDate.prototype.toString = function () {
@@ -86,9 +90,12 @@ LocalDate.prototype.isLeapYear = function (year) {
 
 LocalDate.prototype.getDaysInMonth = function (month, year) {
   var test = month || this.month;
-  var leap = test === 2 && this.isLeapYear(year) ? 1 : 0;
 
-  return [0,31,28,31,30,31,30,31,31,30,31,30,31][test] + leap;
+  return LocalDate._days[test] + (test === 2 && this.isLeapYear(year));
+}
+
+LocalDate.prototype.getDayOfYear = function () {
+  return this.day + (this.month > 2 && this.isLeapYear()) + LocalDate._days.slice(1, this.month).reduce(function (n, a) { return n + a }, 0);
 }
 
 LocalDate.prototype.getDay = function () {
