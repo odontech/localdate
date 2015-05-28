@@ -34,7 +34,7 @@ describe('Valid', function () {
   });
 
   it('today', function () {
-    var l = LocalDate.today();
+    var l = new LocalDate();
     var d = new Date;
 
     assert.equal(l.getYear(), d.getFullYear());
@@ -143,6 +143,17 @@ describe('Add', function () {
     assert.ok(c.isValid());
   });
 
+  it('add 5 years', function () {
+    var l = new LocalDate(2000, 10, 5);
+    var c = l.addYears(5);
+
+    assert.equal(c.getYear(), 2005);
+    assert.equal(c.getMonth(), 10);
+    assert.equal(c.getDay(), 5);
+
+    assert.ok(c.isValid());
+  });
+
 });
 
 describe('Subtract', function () {
@@ -202,6 +213,17 @@ describe('Subtract', function () {
     assert.ok(c.isValid());
   });
 
+  it('subtract 5 years', function () {
+    var l = new LocalDate(2000, 10, 5);
+    var c = l.subtractYears(5);
+
+    assert.equal(c.getYear(), 1995);
+    assert.equal(c.getMonth(), 10);
+    assert.equal(c.getDay(), 5);
+
+    assert.ok(c.isValid());
+  });
+
 });
 
 describe('Compare', function () {
@@ -231,7 +253,7 @@ describe('Compare', function () {
     var l = new LocalDate(2008, 1, 28);
     var c = new LocalDate(2008, 1, 28);
 
-    assert.ok(l.isEqualTo(c));
+    assert.ok(l.equals(c));
   });
 
   it('is before by year', function () {
@@ -285,10 +307,22 @@ describe('Convert', function () {
 
 describe('Utility', function () {
 
-  it('day in year', function () {
+  it('day of year', function () {
     assert.equal(new LocalDate(2005, 4, 10).getDayOfYear(), 100);
-    assert.equal(new LocalDate(2000, 11, 30).getDayOfYear(), 335);
     assert.equal(new LocalDate(2000, 1, 20).getDayOfYear(), 20);
+    assert.equal(new LocalDate(2004, 12, 31).getDayOfYear(), 366);
+  });
+
+  it('day of week', function () {
+    assert.equal(new LocalDate(2005, 4, 10).getDayOfWeek(), 0);
+    assert.equal(new LocalDate(2000, 11, 30).getDayOfWeek(), 4);
+    assert.equal(new LocalDate(1918, 11, 11).getDayOfWeek(), 1);
+  });
+
+  it('julian day', function () {
+    assert.equal(new LocalDate(2005, 4, 10).getJulianDay(), 2453471);
+    assert.equal(new LocalDate(2015, 5, 28).getJulianDay(), 2457171);
+    assert.equal(new LocalDate(1918, 11, 11).getJulianDay(), 2421909);
   });
 
 });

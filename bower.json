@@ -1,12 +1,12 @@
 {
     "name": "localdate"
   , "main": "localdate.js"
-  , "version": "0.3.0"
+  , "version": "1.0.0"
   , "homepage": "https://github.com/milestones-life/localdate"
   , "authors": [
         "Nenad Vukicevic <vukicevic@gmail.com>"
     ]
-  , "description": "JS library to provide a simple date object without time or timezone information"
+  , "description": "JS library to provide an immutable date object that represents an ISO-8601 date (year-month-day)"
   , "moduleType": [
         "globals"
       , "node"
