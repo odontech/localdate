@@ -1,0 +1,27 @@
+{
+    "name": "localdate"
+  , "main": "localdate.js"
+  , "version": "0.1.0"
+  , "homepage": "https://github.com/milestones-life/localdate"
+  , "authors": [
+        "Nenad Vukicevic <vukicevic@gmail.com>"
+    ]
+  , "description": "JS library to provide a simple date object without time or timezone information"
+  , "moduleType": [
+        "globals"
+      , "node"
+    ]
+  , "keywords": [
+        "date"
+      , "localdate"
+      , "immutable"
+    ]
+  , "license": "MIT"
+  , "ignore": [
+        "**/.*"
+      , "node_modules"
+      , "bower_components"
+      , "test"
+      , "tests"
+    ]
+}

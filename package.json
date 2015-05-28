@@ -1,7 +1,7 @@
 {
     "name"        : "localdate"
   , "version"     : "0.1.0"
-  , "description" : "LocalDate is a JS library to provide a simple date object without time or timezone information"
+  , "description" : "JS library to provide a simple date object without time or timezone information"
   , "main"        : "localdate.js"
   , "scripts"     : {
       "test"      : "mocha test/localdate.js"
