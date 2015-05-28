@@ -1,6 +1,6 @@
 {
     "name"            : "localdate"
-  , "version"         : "0.2.0"
+  , "version"         : "0.3.0"
   , "description"     : "JS library to provide a simple date object without time or timezone information"
   , "main"            : "localdate.js"
   , "scripts"         : {

@@ -31,7 +31,7 @@ LocalDate.today = function () {
 }
 
 LocalDate.fromString = function (date) {
-  return new (LocalDate.bind.apply(LocalDate, [undefined].concat(date.split('-'))));
+  return new (LocalDate.bind.apply(LocalDate, [null].concat(date.split('-'))));
 }
 
 LocalDate.fromDate = function (date) {
