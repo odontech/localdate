@@ -1,20 +1,23 @@
 {
-    "name"        : "localdate"
-  , "version"     : "0.2.0"
-  , "description" : "JS library to provide a simple date object without time or timezone information"
-  , "main"        : "localdate.js"
-  , "scripts"     : {
-      "test"      : "mocha test/localdate.js"
+    "name"            : "localdate"
+  , "version"         : "0.2.0"
+  , "description"     : "JS library to provide a simple date object without time or timezone information"
+  , "main"            : "localdate.js"
+  , "scripts"         : {
+        "test"        : "mocha test/localdate.js"
     }
-  , "repository"  : {
-        "type"    : "git"
-      , "url"     : "git://github.com/milestones-life/localdate.git"
+  , "repository"      : {
+        "type"        : "git"
+      , "url"         : "git://github.com/milestones-life/localdate.git"
     }
-  , "keywords"    : [
+  , "keywords"        : [
         "date"
       , "localdate"
       , "immutable"
     ]
-  , "author"      : "Nenad Vukicevic"
-  , "license"     : "MIT"
+  , "devDependencies" : {
+        "mocha"       : "latest"
+    }
+  , "author"          : "Nenad Vukicevic"
+  , "license"         : "MIT"
 }
