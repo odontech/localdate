@@ -15,8 +15,9 @@
    * @constructor
    */
   function LocalDate (year, month, day) {
-    if (typeof year === 'undefined')
+    if (typeof year === 'undefined') {
       return LocalDate.fromDate(new Date);
+    }
 
     this.year  = parseInt(year, 10);
     this.month = parseInt(month, 10);
@@ -81,14 +82,17 @@
   }
 
   LocalDate.prototype.isValid = function () {
-    if (this.year === 0)
+    if (this.year === 0) {
       return false;
+    }
 
-    if (this.month < 1 || this.month > 12)
+    if (this.month < 1 || this.month > 12) {
       return false;
+    }
 
-    if (this.day < 1 || this.day > this.lengthOfMonth())
+    if (this.day < 1 || this.day > this.lengthOfMonth()) {
       return false;
+    }
 
     return !isNaN(this.year) && !isNaN(this.month) && !isNaN(this.day);
   }
