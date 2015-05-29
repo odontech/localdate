@@ -1,4 +1,4 @@
-# localdate
+# LocalDate [![Build Status](https://travis-ci.org/milestones-life/localdate.svg?branch=master)](https://travis-ci.org/milestones-life/localdate)
 LocalDate is a JS library to provide an immutable date object that represents an ISO-8601 date (year-month-day). LocalDate does not store a time or time-zone.
 
 ## Installation
@@ -27,11 +27,23 @@ var epoch = new LocalDate(1970, 1, 1);
 ### Converters
 
 ```javascript
-var now   = LocalDate.fromDate(new Date);
-var birth = LocalDate.fromString('1984-05-02');
+today.toDate();
+epoch.toString();
+```
 
-birth.toDate();
-now.toString();
+### "Static" methods
+
+Create a LocalDate from a String or Date object.
+
+```javascript
+LocalDate.fromDate(new Date);
+LocalDate.fromString('1984-05-02');
+```
+
+There is a comparator method, which can be used when sorting arrays of LocalDate objects.
+
+```javascript
+arrayOfLocalDates.sort(LocalDate.comparator);
 ```
 
 ### Clone
