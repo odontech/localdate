@@ -44,7 +44,11 @@ describe('Valid', function () {
     assert.ok(l.isValid());
   });
 
-  it('fromString', function () {
+});
+
+describe('Static', function () {
+
+  it('from string', function () {
     var l = LocalDate.fromString('2014-01-11');
 
     assert.equal(l.getYear(), 2014);
@@ -54,12 +58,22 @@ describe('Valid', function () {
     assert.ok(l.isValid());
   });
 
-  it('fromDate', function () {
+  it('from date', function () {
     var l = LocalDate.fromDate(new Date(2014, 0, 11));
 
     assert.equal(l.getYear(), 2014);
     assert.equal(l.getMonth(), 1);
     assert.equal(l.getDay(), 11);
+
+    assert.ok(l.isValid());
+  });
+
+  it('from julian day', function () {
+    var l = LocalDate.fromJulianDay(2451545);
+
+    assert.equal(l.getYear(), 2000);
+    assert.equal(l.getMonth(), 1);
+    assert.equal(l.getDay(), 1);
 
     assert.ok(l.isValid());
   });
@@ -303,6 +317,12 @@ describe('Convert', function () {
     assert.equal(c.getDate(), 10);
   });
 
+  it('to julian day', function () {
+    assert.equal(new LocalDate(2005, 4, 10).toJulianDay(), 2453471);
+    assert.equal(new LocalDate(2015, 5, 28).toJulianDay(), 2457171);
+    assert.equal(new LocalDate(1918, 11, 11).toJulianDay(), 2421909);
+  });
+
 });
 
 describe('Utility', function () {
@@ -317,12 +337,6 @@ describe('Utility', function () {
     assert.equal(new LocalDate(2005, 4, 10).getDayOfWeek(), 0);
     assert.equal(new LocalDate(2000, 11, 30).getDayOfWeek(), 4);
     assert.equal(new LocalDate(1918, 11, 11).getDayOfWeek(), 1);
-  });
-
-  it('julian day', function () {
-    assert.equal(new LocalDate(2005, 4, 10).getJulianDay(), 2453471);
-    assert.equal(new LocalDate(2015, 5, 28).getJulianDay(), 2457171);
-    assert.equal(new LocalDate(1918, 11, 11).getJulianDay(), 2421909);
   });
 
 });

@@ -36,11 +36,14 @@ epoch.toString();
 Create a LocalDate from a String or Date object.
 
 ```javascript
-LocalDate.fromDate(new Date);
+LocalDate.fromDate(new Date(1984, 4, 2));
 LocalDate.fromString('1984-05-02');
+LocalDate.fromJulianDay(2445823);
 ```
 
-There is a comparator method, which can be used when sorting arrays of LocalDate objects.
+There is also a comparator method, which can be used when sorting arrays of LocalDate objects.
+
+When working with Julian days, the time is assumed to be 12:00 GMT, giving an integer.
 
 ```javascript
 arrayOfLocalDates.sort(LocalDate.comparator);
@@ -83,7 +86,6 @@ There are lots of utility methods.
 ```javascript
 today.getDayOfWeek();
 today.getDayOfYear();
-today.getJulianDay();
 
 birth.isLeapYear();
 birth.isValid();

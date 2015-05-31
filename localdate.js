@@ -50,6 +50,22 @@
     return new LocalDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
   }
 
+  LocalDate.fromJulianDay = function (d) {
+    var a = Math.floor((d - 1867216.25)/36524.25);
+    var A = d < 2299161 ? d : d + 1 + a - Math.floor(a/4);
+
+    var B = A + 1524;
+    var C = Math.floor((B - 122.1)/365.25);
+    var D = Math.floor(365.25 * C);
+    var E = Math.floor((B - D)/30.6001);
+
+    var day   = B - D - Math.floor(30.6001 * E);
+    var month = E < 14 ? E - 1 : E - 13;
+    var year  = month > 2 ? C - 4716 : C - 4715;
+
+    return new LocalDate(year, month, Math.floor(day));
+  }
+
   LocalDate.prototype.clone = function () {
     return new LocalDate(this.year, this.month, this.day);
   }
@@ -79,6 +95,21 @@
 
   LocalDate.prototype.toDate = function () {
     return new Date(this.year, this.month - 1, this.day);
+  }
+
+  LocalDate.prototype.toJulianDay = function () {
+    var year  = this.year;
+    var month = this.month;
+
+    if (month <= 2) {
+      year  -= 1;
+      month += 12;
+    }
+
+    var A = Math.floor(year/100);
+    var B = 2 - A + Math.floor(A/4);
+
+    return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + this.day + B - 1524;
   }
 
   LocalDate.prototype.isValid = function () {
@@ -119,12 +150,6 @@
 
   LocalDate.prototype.getDayOfWeek = function () {
     return this.toDate().getDay();
-  }
-
-  LocalDate.prototype.getJulianDay = function () {
-    var date = this.toDate();
-
-    return ((date.valueOf() - date.getTimezoneOffset() * 60000) / 86400000) + 2440588;
   }
 
   LocalDate.prototype.getDay = function () {
