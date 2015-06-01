@@ -112,6 +112,10 @@
     return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + this.day + B - 1524;
   }
 
+  LocalDate.prototype.valueOf = function () {
+    return this.toJulianDay();
+  }
+
   LocalDate.prototype.isValid = function () {
     if (this.year === 0) {
       return false;
