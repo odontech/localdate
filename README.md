@@ -24,29 +24,26 @@ var today = new LocalDate();
 var epoch = new LocalDate(1970, 1, 1);
 ```
 
+A LocalDate can be instantiated with a String, Date or Julian day.
+
+```javascript
+new LocalDate('1984-05-02');
+new LocalDate(new Date(1984, 4, 2));
+new LocalDate(2445823);
+```
+
+The basic value of LocalDate tracks the Julian Day. Think of it like the Unix epoch, number of (milli)seconds since 1.1.1970, except for days since 4714 BC.
+
+> The Julian Day is the integer assigned to a whole solar day in the Julian day count starting from noon Greenwich Mean Time, with Julian day number 0 assigned to the day starting at noon on January 1, 4713 BC, proleptic Julian calendar (November 24, 4714 BC, in the proleptic Gregorian calendar).
+
+For whole (integer) Julian days the time is assumed to be 12:00 GMT. LocalDate doesn't keep time or timezones, so the Julian day value is not representative of the point in time (noon), rather the whole solar day.
+
 ### Converters
 
 ```javascript
 today.toDate();
 epoch.toString();
-```
-
-### "Static" methods
-
-Create a LocalDate from a String or Date object.
-
-```javascript
-LocalDate.fromDate(new Date(1984, 4, 2));
-LocalDate.fromString('1984-05-02');
-LocalDate.fromJulianDay(2445823);
-```
-
-There is also a comparator method, which can be used when sorting arrays of LocalDate objects.
-
-When working with Julian days, the time is assumed to be 12:00 GMT, giving an integer.
-
-```javascript
-arrayOfLocalDates.sort(LocalDate.comparator);
+today.toJulianDay(); //same as today.valueOf()
 ```
 
 ### Clone
@@ -72,11 +69,11 @@ var past = today.setYear(2000).setMonth(2).setDay(29);
 You can compare two LocalDate objects, or a LocalDate to a String.
 
 ```javascript
-birth.isBefore(today);
-today.isAfter(past);
-today.equals(now);
+birth.isBefore(today); // true
+today.isAfter(past); // true
+today.equals(new Date); // true
 
-past.isBefore('1923-02-22');
+past.isBefore('1923-02-22'); // false
 ```
 
 ### Utility

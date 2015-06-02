@@ -46,10 +46,10 @@ describe('Valid', function () {
 
 });
 
-describe('Static', function () {
+describe('From other objects', function () {
 
   it('from string', function () {
-    var l = LocalDate.fromString('2014-01-11');
+    var l = new LocalDate('2014-01-11');
 
     assert.equal(l.getYear(), 2014);
     assert.equal(l.getMonth(), 1);
@@ -59,7 +59,7 @@ describe('Static', function () {
   });
 
   it('from date', function () {
-    var l = LocalDate.fromDate(new Date(2014, 0, 11));
+    var l = new LocalDate(new Date(2014, 0, 11));
 
     assert.equal(l.getYear(), 2014);
     assert.equal(l.getMonth(), 1);
@@ -69,7 +69,7 @@ describe('Static', function () {
   });
 
   it('from julian day', function () {
-    var l = LocalDate.fromJulianDay(2451545);
+    var l = new LocalDate(2451545);
 
     assert.equal(l.getYear(), 2000);
     assert.equal(l.getMonth(), 1);
@@ -291,10 +291,11 @@ describe('Compare', function () {
     assert.ok(l.isBefore(c));
   });
 
-  it('compare with string', function () {
-    var l = new LocalDate(2007, 1, 27);
-
-    assert.equal(l.compareTo('2007-11-01'), -1);
+  it('diff', function () {
+    assert.ok(new LocalDate(2007, 1, 27).diff('2007-11-01') < 0);
+    assert.ok(new LocalDate(2009, 1, 27).diff(new Date(2007, 10, 1)) > 0);
+    assert.ok(new LocalDate(2007, 11, 1).diff(new LocalDate(2008, 11, 1)) < 0);
+    assert.equal(new LocalDate(2007, 11, 1).diff(2454406), 0);
   });
 
 });

@@ -1,6 +1,6 @@
 {
     "name"            : "localdate"
-  , "version"         : "2.1.0"
+  , "version"         : "3.0.0"
   , "description"     : "JS library to provide an immutable date object that represents an ISO-8601 date (year-month-day)"
   , "main"            : "localdate.js"
   , "scripts"         : {

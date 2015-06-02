@@ -11,46 +11,19 @@
 
   var _days = [0,31,28,31,30,31,30,31,31,30,31,30,31];
 
-  /**
-   * @constructor
-   */
-  function LocalDate (year, month, day) {
-    if (typeof year === 'undefined') {
-      return LocalDate.fromDate(new Date);
+  function toJulianDay (year, month, day) {
+    if (month <= 2) {
+      year  -= 1;
+      month += 12;
     }
 
-    this.year  = parseInt(year, 10);
-    this.month = parseInt(month, 10);
-    this.day   = parseInt(day, 10);
+    var A = Math.floor(year/100);
+    var B = 2 - A + Math.floor(A/4);
+
+    return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + B - 1524;
   }
 
-  LocalDate.comparator = function (l1, l2) {
-    var result = 0;
-
-    if (l1.year === l2.year) {
-      if (l1.month === l2.month) {
-        if (l1.day !== l2.day) {
-          result = l1.day < l2.day ? -1 : 1;
-        }
-      } else {
-        result = l1.month < l2.month ? -1 : 1;
-      }
-    } else {
-      result = l1.year < l2.year ? -1 : 1;
-    }
-
-    return result;
-  }
-
-  LocalDate.fromString = function (date) {
-    return new (LocalDate.bind.apply(LocalDate, [null].concat(date.split('-'))));
-  }
-
-  LocalDate.fromDate = function (date) {
-    return new LocalDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
-  }
-
-  LocalDate.fromJulianDay = function (d) {
+  function fromJulianDay (d) {
     var a = Math.floor((d - 1867216.25)/36524.25);
     var A = d < 2299161 ? d : d + 1 + a - Math.floor(a/4);
 
@@ -66,24 +39,55 @@
     return new LocalDate(year, month, Math.floor(day));
   }
 
+  function fromString (date) {
+    return new (LocalDate.bind.apply(LocalDate, [null].concat(date.split('-'))));
+  }
+
+  function fromDate (date) {
+    return new LocalDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+  }
+
+  /**
+   * @constructor
+   */
+  function LocalDate (a, b, c) {
+    if (arguments.length === 0) {
+      return fromDate(new Date);
+    } else if (arguments.length === 1) {
+      if (typeof a === 'string') {
+        return fromString(a);
+      } else if (a instanceof Date) {
+        return fromDate(a);
+      } else {
+        return fromJulianDay(a);
+      }
+    }
+
+    this.year  = parseInt(a, 10);
+    this.month = parseInt(b, 10);
+    this.day   = parseInt(c, 10);
+
+    this.value = toJulianDay(this.year, this.month, this.day);
+  }
+
   LocalDate.prototype.clone = function () {
     return new LocalDate(this.year, this.month, this.day);
   }
 
   LocalDate.prototype.equals = function (date) {
-    return this.compareTo(date) === 0;
+    return this.diff(date) === 0;
   }
 
   LocalDate.prototype.isBefore = function (date) {
-    return this.compareTo(date) === -1;
+    return this.diff(date) < 0;
   }
 
   LocalDate.prototype.isAfter = function (date) {
-    return this.compareTo(date) === 1;
+    return this.diff(date) > 0;
   }
 
-  LocalDate.prototype.compareTo = function (date) {
-    return LocalDate.comparator(this, typeof date === 'string' ? LocalDate.fromString(date) : date);
+  LocalDate.prototype.diff = function (date) {
+    return this.value - (date instanceof LocalDate ? date.valueOf() : new LocalDate(date).valueOf());
   }
 
   LocalDate.prototype.toString = function () {
@@ -98,22 +102,11 @@
   }
 
   LocalDate.prototype.toJulianDay = function () {
-    var year  = this.year;
-    var month = this.month;
-
-    if (month <= 2) {
-      year  -= 1;
-      month += 12;
-    }
-
-    var A = Math.floor(year/100);
-    var B = 2 - A + Math.floor(A/4);
-
-    return Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + this.day + B - 1524;
+    return this.value;
   }
 
   LocalDate.prototype.valueOf = function () {
-    return this.toJulianDay();
+    return this.value;
   }
 
   LocalDate.prototype.isValid = function () {
