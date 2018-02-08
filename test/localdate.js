@@ -1,5 +1,5 @@
 var LocalDate = require('../localdate.js');
-var assert    = require('assert');
+var assert = require('assert');
 
 describe('Valid', function () {
 
@@ -300,13 +300,18 @@ describe('Compare', function () {
 
 });
 
-
 describe('Convert', function () {
 
   it('to string', function () {
     var l = new LocalDate(2005, 4, 10);
 
     assert.equal(l.toString(), '2005-04-10');
+  });
+
+  it('to JSON', function () {
+    var l = new LocalDate(2005, 5, 10);
+
+    assert.equal(JSON.stringify(l), '"2005-05-10"');
   });
 
   it('to date', function () {

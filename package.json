@@ -1,24 +1,24 @@
 {
-    "name"            : "localdate"
-  , "version"         : "3.0.0"
-  , "description"     : "JS library to provide an immutable date object that represents an ISO-8601 date (year-month-day)"
-  , "main"            : "localdate.js"
-  , "scripts"         : {
-        "test"        : "mocha test/localdate.js"
-    }
-  , "repository"      : {
-        "type"        : "git"
-      , "url"         : "git://github.com/milestones-life/localdate.git"
-    }
-  , "keywords"        : [
-        "date"
-      , "localdate"
-      , "immutable"
-      , "ISO-8601"
-    ]
-  , "devDependencies" : {
-        "mocha"       : "latest"
-    }
-  , "author"          : "Nenad Vukicevic"
-  , "license"         : "MIT"
+      "name": "localdate",
+      "version": "3.0.1",
+      "description": "JS library to provide an immutable date object that represents an ISO-8601 date (year-month-day)",
+      "main": "localdate.js",
+      "scripts": {
+            "test": "mocha test/localdate.js"
+      },
+      "repository": {
+            "type": "git",
+            "url": "git://github.com/milestones-life/localdate.git"
+      },
+      "keywords": [
+            "date",
+            "localdate",
+            "immutable",
+            "ISO-8601"
+      ],
+      "devDependencies": {
+            "mocha": "latest"
+      },
+      "author": "Nenad Vukicevic",
+      "license": "MIT"
 }

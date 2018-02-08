@@ -9,7 +9,7 @@
 
   'use strict';
 
-  var _days = [0,31,28,31,30,31,30,31,31,30,31,30,31];
+  var _days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   function toJulianDay (year, month, day) {
     if (month <= 2) {
@@ -32,9 +32,9 @@
     var D = Math.floor(365.25 * C);
     var E = Math.floor((B - D)/30.6001);
 
-    var day   = B - D - Math.floor(30.6001 * E);
+    var day = B - D - Math.floor(30.6001 * E);
     var month = E < 14 ? E - 1 : E - 13;
-    var year  = month > 2 ? C - 4716 : C - 4715;
+    var year = month > 2 ? C - 4716 : C - 4715;
 
     return new LocalDate(year, month, Math.floor(day));
   }
@@ -63,9 +63,9 @@
       }
     }
 
-    this.year  = parseInt(a, 10);
+    this.year = parseInt(a, 10);
     this.month = parseInt(b, 10);
-    this.day   = parseInt(c, 10);
+    this.day = parseInt(c, 10);
 
     this.value = toJulianDay(this.year, this.month, this.day);
   }
@@ -92,7 +92,7 @@
 
   LocalDate.prototype.toString = function () {
     var month = this.month < 10 ? '0' + this.month : this.month;
-    var day   = this.day   < 10 ? '0' + this.day   : this.day;
+    var day = this.day < 10 ? '0' + this.day : this.day;
 
     return this.year + '-' + month + '-' + day;
   }
@@ -103,6 +103,10 @@
 
   LocalDate.prototype.toJulianDay = function () {
     return this.value;
+  }
+
+  LocalDate.prototype.toJSON = function () {
+    return this.toString();
   }
 
   LocalDate.prototype.valueOf = function () {
@@ -178,27 +182,27 @@
   }
 
   LocalDate.prototype.addMonths = function (months) {
-    var year  = this.year;
+    var year = this.year;
     var month = this.month + Math.abs(months);
 
     while (month > 12) {
-      month  -= 12;
-      year   += 1;
+      month -= 12;
+      year += 1;
     }
 
-    var day   = Math.min(this.day, this.lengthOfMonth(month, year));
+    var day = Math.min(this.day, this.lengthOfMonth(month, year));
 
     return new LocalDate(year, month, day);
   }
 
   LocalDate.prototype.addDays = function (days) {
-    var year  = this.year;
+    var year = this.year;
     var month = this.month;
-    var day   = this.day + Math.abs(days);
+    var day = this.day + Math.abs(days);
 
     while (day > this.lengthOfMonth(month, year)) {
-      day    -= this.lengthOfMonth(month, year);
-      month  += 1;
+      day -= this.lengthOfMonth(month, year);
+      month += 1;
 
       if (month > 12) {
         month = 1;
@@ -214,23 +218,23 @@
   }
 
   LocalDate.prototype.subtractMonths = function (months) {
-    var year  = this.year;
+    var year = this.year;
     var month = this.month - Math.abs(months);
 
     while (month < 1) {
-      month  += 12;
-      year   -= 1;
+      month += 12;
+      year -= 1;
     }
 
-    var day   = Math.min(this.day, this.lengthOfMonth(month, year));
+    var day = Math.min(this.day, this.lengthOfMonth(month, year));
 
     return new LocalDate(year, month, day);
   }
 
   LocalDate.prototype.subtractDays = function (days) {
-    var year  = this.year;
+    var year = this.year;
     var month = this.month;
-    var day   = this.day - Math.abs(days);
+    var day = this.day - Math.abs(days);
 
     while (day < 1) {
       if (month - 1 < 1) {
@@ -238,8 +242,8 @@
         year -= 1;
       }
 
-      day    += this.lengthOfMonth(month - 1, year);
-      month  -= 1;
+      day += this.lengthOfMonth(month - 1, year);
+      month -= 1;
     }
 
     return new LocalDate(year, month, day);
@@ -250,5 +254,4 @@
   } else {
     window.LocalDate = LocalDate;
   }
-
 })();
