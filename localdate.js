@@ -54,7 +54,9 @@
     if (arguments.length === 0) {
       return fromDate(new Date);
     } else if (arguments.length === 1) {
-      if (typeof a === 'string') {
+      if (typeof a === 'undefined' || a === null || a === '') {
+        return fromDate(new Date);
+      } else if (typeof a === 'string') {
         return fromString(a);
       } else if (a instanceof Date) {
         return fromDate(a);
